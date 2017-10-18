@@ -9,6 +9,7 @@ namespace EFRemoveManyToManyDemo_ljy
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
