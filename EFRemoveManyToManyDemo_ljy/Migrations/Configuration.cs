@@ -7,14 +7,14 @@ namespace EFRemoveManyToManyDemo_ljy.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<EFRemoveManyToManyDemo_ljy.ManyToManyRemoveContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ManyToManyRemoveContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(EFRemoveManyToManyDemo_ljy.ManyToManyRemoveContext context)
+        protected override void Seed(ManyToManyRemoveContext context)
         {
 
             var roles = new List<Role> {
@@ -28,18 +28,12 @@ namespace EFRemoveManyToManyDemo_ljy.Migrations
                  new User {Id=2,FirstName="Chris",LastName="Paul",CreatedOn=DateTime.Now,Roles=roles.Where(x=>x.Id==2).ToList() },
                  new User {Id=3,FirstName="Jerimy",LastName="Lin",CreatedOn=DateTime.Now,Roles=roles.Take(2).ToList() }
             };
-
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            context.Person.AddOrUpdate(
-              p => p.FullName,
-              new Person { FullName = "张三" },
-              new Person { FullName = "李四" },
-              new Person { FullName = "王二麻子" }
-            );
+            foreach (var item in users)
+            {
+                context.Users.AddOrUpdate(m => new { m.Id }, item);
+            }
+               
+           
             //
         }
     }
